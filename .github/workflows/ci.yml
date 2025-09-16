@@ -1,0 +1,55 @@
+name: au-revoir-gitlab-ci
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feat/**
+      - chore/**
+      - fix/**
+  pull_request:
+    branches:
+      - main
+      - develop
+      - feat/**
+      - chore/**
+      - fix/**
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    
+    - name: Install dependencies
+      run: make install-dev
+    
+    - name: Run linting
+      run: make lint
+    
+    - name: Run type checking
+      run: make type-check
+    
+    - name: Run basic tests
+      run: make test
+    
+    - name: Run unit tests
+      run: make test-unit
+    
+    - name: Validate script
+      run: make validate
+
