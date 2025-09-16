@@ -11,7 +11,6 @@ Copyright (c) 2025 Michele Tavella <meeghele@proton.me>
 Licensed under the MIT License. See LICENSE file for details.
 
 Author: Michele Tavella <meeghele@proton.me>
-Version: 1.0.0
 License: MIT
 """
 
